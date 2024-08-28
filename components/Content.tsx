@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import Signup from "./SignupForm";
+import Image from "next/image";
 
 export default function Content() {
   const [signup, setSignup] = useState(false);
@@ -11,6 +12,12 @@ export default function Content() {
 
   return (
     <div className="flex flex-col space-y-16 items-center text-center animate-slide-in-bottom max-w-3xl">
+      <Image
+        src="/waiter-graphic.svg"
+        alt="overview"
+        width={450}
+        height={300}
+      />
       <div className="flex flex-col space-y-4">
         <h1 className="text-xl">{"<2docs/>"}</h1>
         <h2 className="text-4xl font-semibold">

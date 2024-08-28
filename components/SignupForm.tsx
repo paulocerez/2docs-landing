@@ -14,7 +14,9 @@ export default function Signup() {
     // Here you can add your logic to handle the form submission
     // For example, sending the data to an API endpoint
 
-    setMessage("Thank you for signing up! Check your mails :*");
+    setMessage(
+      "Thank you for signing up! Check your mails and close this page :*"
+    );
   };
 
   return (
@@ -46,7 +48,7 @@ export default function Signup() {
             required
           />
           <p className="text-gray-500 text-xs text-left">
-            This modern communication thingy. 💌
+            This dotcom bubble communication thingy. 💌
           </p>
         </div>
         <Button variant="outline" type="submit">
