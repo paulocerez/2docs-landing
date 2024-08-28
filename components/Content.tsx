@@ -1,9 +1,17 @@
+import { useState } from "react";
 import { Button } from "./ui/button";
+import Signup from "./SignupForm";
 
 export default function Content() {
+  const [signup, setSignup] = useState(false);
+
+  if (signup) {
+    return <Signup />;
+  }
+
   return (
-    <div className="flex flex-col space-y-16 items-center text-center">
-      <div className="flex flex-col space-y-4 animate-slide-in-bottom">
+    <div className="flex flex-col space-y-16 items-center text-center animate-slide-in-bottom max-w-3xl">
+      <div className="flex flex-col space-y-4">
         <h1 className="text-xl">{"<2docs/>"}</h1>
         <h2 className="text-4xl font-semibold">
           Combine two or more API docs into{" "}
@@ -14,7 +22,9 @@ export default function Content() {
           Best used for all API&apos;s Zapier didn&apos;t integrate yet.
         </p>
       </div>
-      <Button variant="outline">Sign up for the Waitlist</Button>
+      <Button variant="outline" onClick={() => setSignup(true)}>
+        Sign up for the Waitlist
+      </Button>
     </div>
   );
 }
