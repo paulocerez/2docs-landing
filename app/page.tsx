@@ -6,7 +6,7 @@ import Loom from "@/components/Loom";
 
 export default function Home() {
   return (
-    <main className="flex flex-col h-screen p-8 justify-between items-center space-y-12">
+    <main className="flex flex-col p-8 justify-between items-center space-y-12">
       <Header />
       <Content />
       <Loom />

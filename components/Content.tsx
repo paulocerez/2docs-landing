@@ -14,15 +14,15 @@ export default function Content() {
 
   return (
     <div className="flex flex-col space-y-16 items-center text-center animate-slide-in-bottom max-w-3xl">
-      {theme === "light" ? (
+      {theme === "dark" ? (
+        <Image src="/waiter-dark.svg" alt="overview" width={450} height={300} />
+      ) : (
         <Image
           src="/waiter-light.svg"
           alt="overview"
           width={450}
           height={300}
         />
-      ) : (
-        <Image src="/waiter-dark.svg" alt="overview" width={450} height={300} />
       )}
       <div className="flex flex-col space-y-4">
         <h1 className="text-md md:text-xl">{"<2docs/>"}</h1>

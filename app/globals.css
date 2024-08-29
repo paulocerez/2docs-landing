@@ -82,3 +82,13 @@
 .animate-slide-in-bottom {
   animation: slide-in-bottom 1s ease-in-out;
 }
+
+@media (max-width: 768px) {
+  #loom {
+    /* height: 155px; */
+    width: 100%;
+  }
+  iframe {
+    width: 100%;
+  }
+}
