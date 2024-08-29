@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import Signup from "./SignupForm";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 export default function Content() {
   const [signup, setSignup] = useState(false);
+  const { theme } = useTheme();
 
   if (signup) {
     return <Signup />;
@@ -12,12 +14,16 @@ export default function Content() {
 
   return (
     <div className="flex flex-col space-y-16 items-center text-center animate-slide-in-bottom max-w-3xl">
-      <Image
-        src="/waiter-graphic.svg"
-        alt="overview"
-        width={450}
-        height={300}
-      />
+      {theme === "light" ? (
+        <Image
+          src="/waiter-light.svg"
+          alt="overview"
+          width={450}
+          height={300}
+        />
+      ) : (
+        <Image src="/waiter-dark.svg" alt="overview" width={450} height={300} />
+      )}
       <div className="flex flex-col space-y-4">
         <h1 className="text-md md:text-xl">{"<2docs/>"}</h1>
         <h2 className="text-xl md:text-2xl lg:text-4xl font-semibold">
@@ -26,7 +32,9 @@ export default function Content() {
           workflows.{" "}
         </h2>
         <p className="text-sm md:text-lg text-gray-500">
-          Best used for all API&apos;s Zapier didn&apos;t integrate yet.
+          Best used for all API&apos;s Zapier didn&apos;t integrate yet. Or if
+          you planned higher budget for domain names than automation saas
+          subscriptions.
         </p>
       </div>
       <Button variant="outline" onClick={() => setSignup(true)}>

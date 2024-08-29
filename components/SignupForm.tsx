@@ -20,7 +20,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col space-y-8 text-center justify-center max-w-3xl p-12 animate-slide-in-bottom border rounded-sm shadow-md">
+    <div className="flex flex-col space-y-8 text-center justify-center items-center max-w-3xl p-12 animate-slide-in-bottom border rounded-sm shadow-md">
       <h1 className="text-xl font-medium">
         We just need a few <span className="text-blue-500">details</span> 👀👉🏼👈🏼
       </h1>
