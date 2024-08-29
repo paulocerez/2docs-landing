@@ -2,21 +2,30 @@
 
 import { FormEvent, useState } from "react";
 import { Button } from "./ui/button";
+import { createClient } from "@/lib/supabase/client";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const supabase = createClient();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Here you can add your logic to handle the form submission
-    // For example, sending the data to an API endpoint
+    const url = "/api/subscribe";
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email }),
+    };
 
-    setMessage(
-      "Thank you for signing up! Check your mails and close this page :*"
-    );
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    setMessage(data.message);
   };
 
   return (
