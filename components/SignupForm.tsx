@@ -12,56 +12,51 @@ export default function Signup() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setMessage("");
+    setIsError(false);
 
     try {
       const { data: supabaseData, error: supabaseError } = await supabase
         .from("subscribers")
-        .insert([{ name, email }]);
+        .upsert([{ name, email }, { onConflict: "email" }])
+        .select();
 
       if (supabaseError) {
-        // Check if it's a duplicate email error
-        if (
-          supabaseError.code === "23505" &&
-          supabaseError.details.includes("subscribers_email_key")
-        ) {
-          setIsError(true);
-          setMessage("This email is already subscribed to our waitlist.");
-          return;
-        }
         throw new Error(`Supabase error: ${supabaseError.message}`);
       }
 
-      //   Send mail via Sendgrid API
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email }),
-      });
+      //   check if user was inserted or updated
+      const isNewSignup =
+        supabaseData && supabaseData.length > 0 && !supabaseData[0].confirmed;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          `API error: ${errorData.message || response.statusText}`
+      if (isNewSignup) {
+        //   Send confirmation mail via Sendgrid API
+        const response = await fetch("/api/send-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            `API error: ${errorData.message || response.statusText}`
+          );
+        }
+        setMessage(
+          "Thank you for joining our waitlist! Please check your email for confirmation."
         );
+      } else {
+        setMessage("You're already on our waitlist. We'll keep you updated!");
       }
-
-      const apiData = await response.json();
-
-      //   Success case > set message and reset state variables
-      setMessage("Thank you for joining the waitlist! <3");
       setName("");
       setEmail("");
-
-      //   Log success message if possible
-      if (apiData.message) {
-        console.log("API response:", apiData.message);
-      }
     } catch (error) {
       console.error("Error: ", error);
       setIsError(true);
-      setMessage("An error occurred. Please try again! :)");
+      setMessage("An error occurred. Please try again.");
     }
   };
 
