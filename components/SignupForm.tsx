@@ -18,7 +18,10 @@ export default function Signup() {
     try {
       const { data: supabaseData, error: supabaseError } = await supabase
         .from("subscribers")
-        .upsert([{ name, email }, { onConflict: "email" }])
+        .upsert(
+          { name, email },
+          { onConflict: "email", ignoreDuplicates: false }
+        )
         .select();
 
       if (supabaseError) {
