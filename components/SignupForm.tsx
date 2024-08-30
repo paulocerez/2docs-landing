@@ -2,13 +2,12 @@
 
 import { FormEvent, useState } from "react";
 import { Button } from "./ui/button";
-import { createClient } from "@/lib/supabase/client";
+import { supabase } from "@/lib/supabase/client";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const supabase = createClient();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -53,8 +52,6 @@ export default function Signup() {
       console.error("Error: ", error);
       setMessage("An error occurred. Please try again! :)");
     }
-
-    setMessage(data.message);
   };
 
   return (

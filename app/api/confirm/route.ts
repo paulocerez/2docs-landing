@@ -12,14 +12,14 @@ export default async function GET(request: NextRequest) {
 
   try {
     const email = await verifyToken(token);
-
     if (!email) {
       return NextResponse.json({ error: "Invalid token" }, { status: 400 });
     }
 
     const { error } = await supabase
       .from("subscribers")
-      .update({ confirmed: true, token: null }.eq("email", email));
+      .update({ confirmed: true, token: null })
+      .eq("email", email);
 
     if (error) {
       throw error;
