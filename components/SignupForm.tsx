@@ -8,6 +8,7 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -18,11 +19,20 @@ export default function Signup() {
         .insert([{ name, email }]);
 
       if (supabaseError) {
+        // Check if it's a duplicate email error
+        if (
+          supabaseError.code === "23505" &&
+          supabaseError.details.includes("subscribers_email_key")
+        ) {
+          setIsError(true);
+          setMessage("This email is already subscribed to our waitlist.");
+          return;
+        }
         throw new Error(`Supabase error: ${supabaseError.message}`);
       }
 
       //   Send mail via Sendgrid API
-      const response = await fetch("/api/subscribe", {
+      const response = await fetch("/api/send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,6 +60,7 @@ export default function Signup() {
       }
     } catch (error) {
       console.error("Error: ", error);
+      setIsError(true);
       setMessage("An error occurred. Please try again! :)");
     }
   };
@@ -89,7 +100,15 @@ export default function Signup() {
         <Button variant="outline" type="submit">
           Sign up for the Waitlist
         </Button>
-        {message && <p className="text-green-500 mt-4">{message}</p>}
+        {message && (
+          <p
+            className={`text-sm mt-4 ${
+              isError ? "text-red-500" : "text-green-500"
+            }`}
+          >
+            {message}
+          </p>
+        )}
       </form>
     </div>
   );

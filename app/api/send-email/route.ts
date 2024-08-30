@@ -5,7 +5,7 @@ import waitlistConfirmationTemplate from "@/lib/email-templates/waitlist-confirm
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const { name, email } = await request.json();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://localhost:3000";
   const token = generateToken(email);

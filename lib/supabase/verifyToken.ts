@@ -1,13 +1,20 @@
+import { createHash } from "crypto";
+import { supabase } from "./client";
+import jwt from "jsonwebtoken";
+import { TokenPayLoad } from "@/types/token";
+
+const jwtSecret = process.env.JWT_SECRET!;
+
 export default async function verifyToken(
   token: string
 ): Promise<string | null> {
   try {
-    const decoded = jwt.verify(token, jwtSecret) as TokenPayload;
+    const decoded = jwt.verify(token, jwtSecret) as TokenPayLoad;
     const hashedToken = hashToken(token);
 
     const { data, error } = await supabase
       .from("subscribers")
-      .select("email", "token_created_at")
+      .select("email, token_created_at")
       .eq("email", decoded.email)
       .eq("token", hashedToken)
       .single();
@@ -30,6 +37,6 @@ export default async function verifyToken(
   }
 }
 
-function hashToken(token: string): string {
+export function hashToken(token: string): string {
   return createHash("sha256").update(token).digest("hex");
 }

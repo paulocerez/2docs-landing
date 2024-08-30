@@ -1,4 +1,4 @@
 export interface TokenPayLoad {
   email: string;
-  expiresIn: number;
+  exp: number;
 }
