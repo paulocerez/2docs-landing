@@ -1,4 +1,8 @@
-export default function GET(request: NextRequest) {
+import { supabase } from "@/lib/supabase/client";
+import verifyToken from "@/lib/supabase/verifyToken";
+import { NextRequest, NextResponse } from "next/server";
+
+export default async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const token = searchParams.get("token");
 

@@ -1,13 +1,13 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import sgMail from "@sendgrid/mail";
-import crypto from "crypto";
+import generateToken from "@/lib/supabase/generateToken";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-export default function POST(request: NextRequest) {
+export default async function POST(request: NextRequest) {
   const { name, email } = await request.json();
-  const baseUrl = process.NEXT_PUBLIC_BASE_URL || "https://localhost:3000";
-  const token = crypto.randomBytes(32).toString("hex");
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://localhost:3000";
+  const token = generateToken(email);
 
   const message = {
     to: email,
@@ -125,7 +125,7 @@ export default function POST(request: NextRequest) {
 
   try {
     await sgMail.send(message);
-    return new NextResponse.json(
+    return NextResponse.json(
       { message: "Email sent successfully!" },
       { status: 200 }
     );
