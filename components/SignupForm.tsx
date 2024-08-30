@@ -13,17 +13,46 @@ export default function Signup() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const url = "/api/subscribe";
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email }),
-    };
+    try {
+      const { data: supabaseData, error: supabaseError } = await supabase
+        .from("subscribers")
+        .insert([{ name, email }]);
 
-    const response = await fetch(url, options);
-    const data = await response.json();
+      if (supabaseError) {
+        throw new Error(`Supabase error: ${supabaseError.message}`);
+      }
+
+      //   Send mail via Sendgrid API
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          `API error: ${errorData.message || response.statusText}`
+        );
+      }
+
+      const apiData = await response.json();
+
+      //   Success case > set message and reset state variables
+      setMessage("Thank you for joining the waitlist! <3");
+      setName("");
+      setEmail("");
+
+      //   Log success message if possible
+      if (apiData.message) {
+        console.log("API response:", apiData.message);
+      }
+    } catch (error) {
+      console.error("Error: ", error);
+      setMessage("An error occurred. Please try again! :)");
+    }
 
     setMessage(data.message);
   };
