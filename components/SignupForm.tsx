@@ -56,13 +56,13 @@ export default function Signup() {
           <input
             type="text"
             value={name}
-            placeholder="Your name"
+            placeholder="Your full name"
             onChange={(e) => setName(e.target.value)}
             className="border p-2 rounded w-full"
             required
           />
           <p className="text-gray-500 text-xs">
-            How your mom calls you to help with the groceries. 🏃🏻‍♀️
+            For reference, look at your birth certificate 🤓.
           </p>
         </div>
         <div className="space-y-2">
