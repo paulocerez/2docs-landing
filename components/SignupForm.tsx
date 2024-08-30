@@ -9,97 +9,88 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setMessage("");
     setIsError(false);
+    setIsLoading(true);
 
     try {
-      const { data: supabaseData, error: supabaseError } = await supabase
-        .from("subscribers")
-        .upsert({ name, email })
-        .select();
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email }),
+      });
 
-      if (supabaseError) {
-        throw new Error(`Supabase error: ${supabaseError.message}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "An error occurred during signup");
       }
 
-      //   check if user was inserted or updated
-      const isNewSignup =
-        supabaseData && supabaseData.length > 0 && !supabaseData[0].confirmed;
-
-      if (isNewSignup) {
-        //   Send confirmation mail via Sendgrid API
-        const response = await fetch("/api/send-email", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(
-            `API error: ${errorData.message || response.statusText}`
-          );
-        }
-        setMessage(
-          "Thank you for joining our waitlist! Please check your email for confirmation."
-        );
-      } else {
-        setMessage("You're already on our waitlist. We'll keep you updated!");
+      setMessage(data.message);
+      if (data.isNewSignup) {
+        setName("");
+        setEmail("");
       }
-      setName("");
-      setEmail("");
     } catch (error) {
-      console.error("Error: ", error);
+      console.error("Signup error:", error);
       setIsError(true);
       setMessage("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col space-y-8 text-center justify-center items-center max-w-3xl p-12 animate-slide-in-bottom border rounded-sm shadow-md">
-      <h1 className="text-xl font-medium">
+    <div className="w-full max-w-md mx-auto p-6 animate-slide-in-bottom border rounded-sm shadow-md">
+      <h1 className="text-xl font-medium text-center mb-6">
         We just need a few <span className="text-blue-500">details</span> 👀👉🏼👈🏼
       </h1>
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-8">
-        <div className="flex flex-col space-y-2">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-2">
           <input
             type="text"
             value={name}
             placeholder="Your name"
             onChange={(e) => setName(e.target.value)}
-            className="border p-2 rounded w-full max-w-sm"
+            className="border p-2 rounded w-full"
             required
           />
-          <p className="text-gray-500 text-xs text-left">
+          <p className="text-gray-500 text-xs">
             How your mom calls you to help with the groceries. 🏃🏻‍♀️
           </p>
         </div>
-        <div className="flex flex-col space-y-2">
+        <div className="space-y-2">
           <input
             type="email"
             value={email}
             placeholder="Your email"
-            className="border p-2 rounded w-full max-w-sm"
+            className="border p-2 rounded w-full"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <p className="text-gray-500 text-xs text-left">
+          <p className="text-gray-500 text-xs">
             This dotcom bubble communication thingy. 💌
           </p>
         </div>
-        <Button variant="outline" type="submit">
-          Sign up for the Waitlist
+        <Button
+          variant="outline"
+          type="submit"
+          disabled={isLoading}
+          className="w-full"
+        >
+          {isLoading ? "Signing up..." : "Sign up for the Waitlist"}
         </Button>
         {message && (
           <p
             className={`text-sm mt-4 ${
               isError ? "text-red-500" : "text-green-500"
-            }`}
+            } break-words`}
           >
             {message}
           </p>
