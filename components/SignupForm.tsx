@@ -32,6 +32,7 @@ export default function Signup() {
       }
 
       setMessage(data.message);
+      setIsError(false);
       if (data.isNewSignup) {
         setName("");
         setEmail("");
@@ -39,7 +40,12 @@ export default function Signup() {
     } catch (error) {
       console.error("Signup error:", error);
       setIsError(true);
-      setMessage("An error occurred. Please try again.");
+      //   retrieve backend error message for appropriate response for the user
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "An error occurred. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +94,7 @@ export default function Signup() {
         {message && (
           <p
             className={`text-sm mt-4 ${
-              isError ? "text-red-500" : "text-green-500"
+              isError ? "text-red-500" : "text-blue-500"
             } break-words`}
           >
             {message}
