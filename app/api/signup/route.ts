@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: isNewSignup
-          ? "Thank you for joining our waitlist! Please check your email for confirmation."
+          ? "Thank you for joining our waitlist! Please check your email for confirmation (100% spam rate right now 🔥)."
           : "You're already on our waitlist. We'll keep you updated!",
         isNewSignup,
       },

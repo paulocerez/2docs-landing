@@ -2,7 +2,6 @@
 
 import { FormEvent, useState } from "react";
 import { Button } from "./ui/button";
-import { supabase } from "@/lib/supabase/client";
 
 export default function Signup() {
   const [name, setName] = useState("");
