@@ -49,8 +49,10 @@ export default function Content() {
         <h1 className="text-md md:text-xl">{"<2docs/>"}</h1>
         <h2 className="text-xl md:text-2xl lg:text-4xl font-semibold">
           Combine two or more API docs into{" "}
-          <span className="text-blue-500 underline">seamless</span> code
-          workflows.{" "}
+          <span className="text-blue-500 underline decoration-dotted">
+            seamless
+          </span>{" "}
+          code workflows.{" "}
         </h2>
         <p className="text-sm md:text-lg text-gray-500">
           Best used for all API&apos;s Zapier didn&apos;t integrate yet. Or if

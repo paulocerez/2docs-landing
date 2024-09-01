@@ -47,7 +47,7 @@ function ConfirmContent() {
       <h1 className="text-xl md:text-3xl font-bold mb-8">
         Subscription{" "}
         <span
-          className={`underline ${
+          className={`underline decoration-wavy ${
             status === "success" ? "text-blue-500" : "text-red-500"
           }`}
         >
