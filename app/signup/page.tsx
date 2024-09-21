@@ -53,7 +53,7 @@ export default function Signup() {
       <h1 className="text-3xl font-medium text-center mb-6">Nearly done.</h1>
       <form
         onSubmit={handleSubmit}
-        className="space-y-10 px-4 w-full max-w-screen-sm"
+        className="space-y-10 px-4 w-full sm:max-w-lg"
       >
         <div className="space-y-2">
           <input
@@ -84,7 +84,7 @@ export default function Signup() {
         <button
           type="submit"
           disabled={isLoading}
-          className="text-center bg-blue-600 hover:bg-blue-500 py-2 px-4 text-slate-100 rounded-md font-medium w-full md:w-auto md:px-6 shadow-xl"
+          className="text-center bg-blue-600 hover:bg-blue-500 py-2 px-4 text-slate-100 rounded-md font-medium w-full sm:w-fit md:w-auto md:px-6 shadow-xl"
         >
           {isLoading ? "Signing up..." : "Sign up for the Waitlist"}
         </button>
