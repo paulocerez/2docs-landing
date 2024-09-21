@@ -1,7 +1,5 @@
 "use client";
-
 import { FormEvent, useState } from "react";
-import { Button } from "./ui/button";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -40,7 +38,6 @@ export default function Signup() {
     } catch (error) {
       console.error("Signup error:", error);
       setIsError(true);
-      //   retrieve backend error message for appropriate response for the user
       setMessage(
         error instanceof Error
           ? error.message
@@ -52,11 +49,12 @@ export default function Signup() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 animate-slide-in-bottom border rounded-sm shadow-md">
-      <h1 className="text-xl font-medium text-center mb-6">
-        We just need a few <span className="text-blue-500">details</span> 👀👉🏼👈🏼
-      </h1>
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="flex flex-col justify-center items-center p-4 h-screen space-y-12">
+      <h1 className="text-3xl font-medium text-center mb-6">Nearly done.</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-10 px-4 w-full max-w-screen-sm"
+      >
         <div className="space-y-2">
           <input
             type="text"
@@ -83,14 +81,13 @@ export default function Signup() {
             This dotcom bubble communication thingy. 💌
           </p>
         </div>
-        <Button
-          variant="outline"
+        <button
           type="submit"
           disabled={isLoading}
-          className="w-full"
+          className="text-center bg-blue-600 hover:bg-blue-500 py-2 px-4 text-slate-100 rounded-md font-medium w-full md:w-auto md:px-6 shadow-xl"
         >
           {isLoading ? "Signing up..." : "Sign up for the Waitlist"}
-        </Button>
+        </button>
         {message && (
           <p
             className={`text-sm mt-4 ${
