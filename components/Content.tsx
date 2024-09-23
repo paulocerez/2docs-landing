@@ -1,28 +1,33 @@
-import { Button } from "./ui/button";
-import Image from "next/image";
-import { useTheme } from "next-themes";
-import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
+interface ContentProps {
+  setInterested: (value: boolean) => void;
+  interested: boolean;
+}
 
-export default function Content() {
+export default function Content({ setInterested, interested }: ContentProps) {
   return (
     <div className="flex flex-col space-y-12 items-center text-left sm:text-center animate-slide-in-bottom max-w-3xl py-8">
       <div className="flex flex-col space-y-4">
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold">
           Two API&apos;s. <br></br>
-          One workflow.
-        </h2>
+          One work
+          <span className="float-text">f</span>
+          <span className="float-text">l</span>
+          <span className="float-text">o</span>
+          <span className="float-text">w</span>.
+        </h1>
         <p className="text-md sm:text-lg md:text-xl text-gray-500 max-w-2xl">
           You give us the docs, we generate the workflow - from document
           generation to flashcard creation.
         </p>
       </div>
-      <Link
-        href="/signup"
-        className="text-center bg-blue-600 hover:bg-blue-500 py-2 px-4 text-slate-100 rounded-md font-medium w-full sm:max-w-fit md:px-6 shadow-xl"
-      >
-        Sign up for the Waitlist
-      </Link>
+      {!interested && (
+        <button
+          onClick={() => setInterested(true)}
+          className="signup-button text-white rounded-lg transition duration-500 w-full sm:w-fit sm:px-12 shadow-xl"
+        >
+          I&apos;m interested
+        </button>
+      )}
     </div>
   );
 }

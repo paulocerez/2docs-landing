@@ -49,31 +49,30 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-4 h-screen space-y-12">
-      <h1 className="text-3xl font-medium text-center mb-6">Nearly done.</h1>
+    <div className="flex flex-col justify-center items-center sm:p-4 space-y-12">
       <form
         onSubmit={handleSubmit}
-        className="space-y-10 px-4 w-full sm:max-w-lg"
+        className="flex flex-col space-y-10 px-4 w-full sm:max-w-lg items-center"
       >
-        <div className="space-y-2">
+        <div className="space-y-2 w-full">
           <input
             type="text"
             value={name}
             placeholder="Your full name"
             onChange={(e) => setName(e.target.value)}
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded-lg w-full"
             required
           />
           <p className="text-gray-500 text-xs">
-            For reference, look at your birth certificate 🤓.
+            For reference, look at your birth certificate. 🤓
           </p>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 w-full">
           <input
             type="email"
             value={email}
             placeholder="Your email"
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded-lg w-full"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -84,7 +83,7 @@ export default function Signup() {
         <button
           type="submit"
           disabled={isLoading}
-          className="text-center bg-blue-600 hover:bg-blue-500 py-2 px-4 text-slate-100 rounded-md font-medium w-full sm:w-fit md:w-auto md:px-6 shadow-xl"
+          className="signup-button text-center py-2 px-4 rounded-md font-normal w-full sm:w-fit md:w-auto md:px-6"
         >
           {isLoading ? "Signing up..." : "Sign up for the Waitlist"}
         </button>

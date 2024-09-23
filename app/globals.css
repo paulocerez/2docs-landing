@@ -92,3 +92,61 @@
     width: 100%;
   }
 }
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(15px);
+  }
+}
+
+.float-text {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+.float-text:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.float-text:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.float-text:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.float-text:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.signup-button {
+  padding: 10px 20px;
+  border: none;
+  background: rgb(37, 99, 235);
+  color: #f1f5f9;
+  -webkit-box-shadow: 0 0 25px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signup-button:hover {
+  background: rgb(59, 130, 246);
+  -webkit-box-shadow: 0 0 5px rgba(37, 99, 235, 0.7),
+    0 0 25px rgba(37, 99, 235, 0.5), 0 0 50px rgba(37, 99, 235, 0.3),
+    0 0 100px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 5px rgba(37, 99, 235, 0.7), 0 0 25px rgba(37, 99, 235, 0.5),
+    0 0 50px rgba(37, 99, 235, 0.3), 0 0 100px rgba(37, 99, 235, 0.1);
+}
+
+@media (max-width: 768px) {
+  .signup-button:hover {
+    -webkit-box-shadow: 0 0 5px rgba(37, 99, 235, 0.7),
+      0 0 15px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.7), 0 0 15px rgba(37, 99, 235, 0.5);
+  }
+}
