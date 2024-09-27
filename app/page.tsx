@@ -9,7 +9,7 @@ export default function Home() {
   const [interested, setInterested] = useState(false);
 
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen py-12">
       <div className="flex-grow flex flex-col p-8 justify-center items-center space-y-8">
         <Content setInterested={setInterested} interested={interested} />
         <div className="relative w-full max-w-3xl">
